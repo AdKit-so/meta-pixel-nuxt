@@ -32,6 +32,8 @@ reports
 coverage
 *.lcov
 .nyc_output
+playwright-report
+test-results
 
 # VSCode
 .vscode/*
