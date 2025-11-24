@@ -35,7 +35,7 @@ export default defineNuxtConfig({
     modules: ['@adkit.so/meta-pixel-nuxt'],
 
     metaPixel: {
-        pixelIds: ['YOUR_PIXEL_ID'],
+        pixelIds: 'YOUR_PIXEL_ID', // or array ['PIXEL_1', 'PIXEL_2']
         autoTrackPageView: true, // default: true
         debug: true, // Enable debug logs (default: false)
         enableLocalhost: true, // Enable on localhost (default: false)
