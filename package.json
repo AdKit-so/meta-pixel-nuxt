@@ -1,8 +1,11 @@
 {
   "name": "@adkit.so/meta-pixel-nuxt",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Nuxt 3 & 4 module for Meta Pixel tracking, built on top of @adkit.so/meta-pixel",
-  "repository": "adkit-so/meta-pixel-nuxt",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adkit-so/meta-pixel-nuxt.git"
+  },
   "license": "MIT",
   "type": "module",
   "exports": {
