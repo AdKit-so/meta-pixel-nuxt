@@ -8,9 +8,9 @@
                     <div class="font-medium">Standard Events</div>
                 </template>
                 <div class="space-y-3">
-                    <UButton block @click="trackPurchase" color="primary">Track Purchase ($99)</UButton>
-                    <UButton block @click="trackAddToCart" color="green">Track AddToCart</UButton>
-                    <UButton block @click="trackLead" color="blue">Track Lead</UButton>
+                    <UButton block color="primary" @click="trackPurchase">Track Purchase ($99)</UButton>
+                    <UButton block color="green" @click="trackAddToCart">Track AddToCart</UButton>
+                    <UButton block color="blue" @click="trackLead">Track Lead</UButton>
                 </div>
             </UCard>
 
@@ -19,8 +19,8 @@
                     <div class="font-medium">Custom Events</div>
                 </template>
                 <div class="space-y-3">
-                    <UButton block @click="trackCustom" color="orange">Track Custom Event</UButton>
-                    <UButton block @click="trackWithMetadata" color="purple">With Metadata</UButton>
+                    <UButton block color="orange" @click="trackCustom">Track Custom Event</UButton>
+                    <UButton block color="purple" @click="trackWithMetadata">With Metadata</UButton>
                 </div>
             </UCard>
 

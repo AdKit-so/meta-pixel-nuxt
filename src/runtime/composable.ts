@@ -1,5 +1,5 @@
 import META from '@adkit.so/meta-pixel'
-import type { StandardEvent, EventData, EventMetaData } from '@adkit.so/meta-pixel'
+import type { StandardEvent, EventData, EventMetaData, MetaPixelInterface } from '@adkit.so/meta-pixel'
 
 // Re-export types for easy importing
 export type { StandardEvent, EventData, EventMetaData }
@@ -16,6 +16,6 @@ export type { StandardEvent, EventData, EventMetaData }
  * meta.trackCustom('MyEvent', { data: 'value' });
  * const loaded = meta.isLoaded();
  */
-export const useMetaPixel = () => {
+export const useMetaPixel = (): MetaPixelInterface => {
   return META
 }

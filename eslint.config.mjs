@@ -12,7 +12,6 @@ export default createConfigForNuxt({
     },
 }).append({
     rules: {
-        '@typescript-eslint/no-deprecated': 'error',
         'vue/html-self-closing': 'off',
         'vue/multi-word-component-names': 'off',
         'vue/no-mutating-props': 'off',
@@ -31,5 +30,16 @@ export default createConfigForNuxt({
             },
         ],
         'no-unused-vars': 'off',
+    },
+}).append({
+    files: ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts', '**/*.vue'],
+    languageOptions: {
+        parserOptions: {
+            project: ['./tsconfig.json', './playground/tsconfig.json'],
+            extraFileExtensions: ['.vue'],
+        },
+    },
+    rules: {
+        '@typescript-eslint/no-deprecated': 'error',
     },
 });
