@@ -100,14 +100,14 @@ export default defineNuxtConfig({
 
 ### Configuration Options
 
-| Option              | Type                 | Default | Description                                                      |
-| ------------------- | -------------------- | ------- | ---------------------------------------------------------------- |
-| `pixelIds`          | `string \| string[]` | `''`    | **Required.** Single pixel ID or array of pixel IDs              |
-| `autoTrackPageView` | `boolean`            | `true`  | Automatically track PageView on initialization                   |
-| `debug`             | `boolean`            | `false` | Enable styled console logs with background colors                |
-| `enableLocalhost`   | `boolean`            | `false` | Enable tracking on localhost (useful for testing)                |
-| `excludedRoutes`    | `string[]`           | `[]`    | Array of regex strings to exclude from tracking                  |
-| `includedRoutes`    | `string[]`           | `[]`    | Array of regex strings to whitelist (only these will be tracked) |
+| Option              | Type                 | Default | Description                                                                  |
+| ------------------- | -------------------- | ------- | ---------------------------------------------------------------------------- |
+| `pixelIds`          | `string \| string[]` | `''`    | **Required.** Single pixel ID or array of pixel IDs                          |
+| `autoTrackPageView` | `boolean`            | `true`  | Automatically track PageView on initialization                               |
+| `debug`             | `boolean`            | `false` | Enable styled console logs with background colors                            |
+| `enableLocalhost`   | `boolean`            | `false` | Enable tracking on localhost (useful for testing)                            |
+| `excludedRoutes`    | `string[]`           | `[]`    | Array of glob patterns to exclude from tracking (e.g., `/dashboard/**`)      |
+| `includedRoutes`    | `string[]`           | `[]`    | Array of glob patterns to whitelist (only these routes will be tracked)      |
 
 ### Multiple Pixels Example
 
@@ -198,17 +198,31 @@ You can control where the pixel is loaded using three methods:
 
 ### 1. Exclude Routes (Global)
 
-In `nuxt.config.ts`, provide an array of regex strings to exclude specific routes:
+In `nuxt.config.ts`, provide an array of glob patterns to exclude specific routes:
 
 ```typescript
 export default defineNuxtConfig({
     metaPixel: {
         pixelIds: '...',
-        // Disable on all routes starting with /embed/
-        excludedRoutes: ['^/embed/.*'],
+        
+        excludedRoutes: [
+            '/dashboard/*',      // Excludes /dashboard/inbox, /dashboard/settings (one level)
+            '/dashboard/**',     // Excludes /dashboard and ALL nested routes (any depth)
+            '/admin/**',         // Excludes /admin and all nested routes
+            '/api/*',            // Excludes /api/users, /api/posts (one level only)
+        ],
     },
 });
 ```
+
+**Pattern Syntax:**
+- `*` - Matches any characters except `/` (single path segment)
+- `**` - Matches any characters including `/` (multiple path segments, any depth)
+
+**Examples:**
+- `/dashboard/*` → Excludes `/dashboard/inbox` but NOT `/dashboard/inbox/messages`
+- `/dashboard/**` → Excludes `/dashboard`, `/dashboard/inbox`, `/dashboard/inbox/messages`, etc. (any depth)
+- `/api/*` → Excludes `/api/users` but NOT `/api/users/123`
 
 ### 2. Include Routes (Global)
 
@@ -218,8 +232,12 @@ If you only want to track specific sections, use `includedRoutes`. This takes pr
 export default defineNuxtConfig({
     metaPixel: {
         pixelIds: '...',
-        // Only track routes starting with /shop/ or /checkout/
-        includedRoutes: ['^/shop/.*', '^/checkout/.*'],
+        
+        includedRoutes: [
+            '/shop/**',          // Track all shop pages (any depth)
+            '/checkout/**',      // Track all checkout pages (any depth)
+            '/product/*',        // Track product pages (one level only)
+        ],
     },
 });
 ```
@@ -555,6 +573,36 @@ All methods, events, and parameters have complete TypeScript definitions with In
 3. **Check browser console** - Look for errors or warnings
 4. **Verify route isn't excluded** - Check your `excludedRoutes` config
 5. **Enable on localhost** - Set `enableLocalhost: true` for local testing
+
+### Route exclusion not working?
+
+If your routes aren't being excluded properly:
+
+1. **Use glob patterns** - For most cases, glob patterns are easier:
+   ```typescript
+   excludedRoutes: ['/dashboard/**']  // ✅ Correct - excludes all dashboard routes
+   ```
+
+2. **Common mistakes to avoid**:
+   ```typescript
+   // ❌ Wrong - missing leading slash
+   excludedRoutes: ['dashboard/**']
+   
+   // ✅ Correct - with leading slash
+   excludedRoutes: ['/dashboard/**']
+   ```
+
+3. **Enable debug mode** to see which routes are being excluded:
+   ```typescript
+   metaPixel: {
+       debug: true,  // Will log "Route excluded: /dashboard/inbox"
+       excludedRoutes: ['/dashboard/**'],
+   }
+   ```
+
+4. **Pattern examples**:
+   - `/dashboard/*` - Excludes `/dashboard/inbox` but NOT `/dashboard/inbox/messages`
+   - `/dashboard/**` - Excludes `/dashboard`, `/dashboard/inbox`, `/dashboard/inbox/messages`, etc. (any depth)
 
 ### Events not showing in Meta Events Manager?
 

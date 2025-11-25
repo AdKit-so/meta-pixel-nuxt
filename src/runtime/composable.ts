@@ -1,8 +1,8 @@
-import META from '@adkit.so/meta-pixel'
-import type { StandardEvent, EventData, EventMetaData, MetaPixelInterface } from '@adkit.so/meta-pixel'
+import META from '@adkit.so/meta-pixel';
+import type { StandardEvent, EventData, EventMetaData, MetaPixelInterface } from '@adkit.so/meta-pixel';
 
 // Re-export types for easy importing
-export type { StandardEvent, EventData, EventMetaData }
+export type { StandardEvent, EventData, EventMetaData };
 
 /**
  * Access the Meta Pixel instance
@@ -17,5 +17,5 @@ export type { StandardEvent, EventData, EventMetaData }
  * const loaded = meta.isLoaded();
  */
 export const useMetaPixel = (): MetaPixelInterface => {
-  return META
-}
+    return META;
+};

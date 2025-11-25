@@ -6,8 +6,7 @@ export default defineNuxtConfig({
         autoTrackPageView: true,
         debug: true,
         enableLocalhost: true,
-        // includedRoutes: ['^/manual'], // ONLY include any route starting with /manual
-        excludedRoutes: ['^/excluded'], // Exclude any route starting with /excluded
+        excludedRoutes: ['/excluded/**'], // Exclude any route starting with /excluded
     },
 
     compatibilityDate: '2025-02-24',

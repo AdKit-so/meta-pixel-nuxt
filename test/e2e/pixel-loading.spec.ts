@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3333'
 
 test.describe('Meta Pixel Loading', () => {
   test.describe('✅ Normal pages (script should load)', () => {
