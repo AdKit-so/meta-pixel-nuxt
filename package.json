@@ -1,6 +1,6 @@
 {
   "name": "@adkit.so/meta-pixel-nuxt",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "Nuxt 3 & 4 module for Meta Pixel tracking, built on top of @adkit.so/meta-pixel",
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
   ],
   "scripts": {
     "prepack": "nuxt-module-build build",
-    "dev": "npm run dev:prepare && nuxi dev playground",
+    "dev": "npm run dev:prepare && nuxi dev playground --port 3333",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "release": "npm run lint && npm test && npm run prepack && changelogen --release --no-open && npm publish && git push --follow-tags",
