@@ -16,7 +16,6 @@ Built on top of [@adkit.so/meta-pixel](https://www.npmjs.com/package/@adkit.so/m
 -   [Configuration](#%EF%B8%8F-configuration)
 -   [Usage](#-usage)
 -   [Route Control](#-route-control)
--   [Environment Variables](#-environment-variables)
 -   [Standard Events](#-standard-events)
 -   [Advanced Usage](#-advanced-usage)
 -   [Troubleshooting](#-troubleshooting)
@@ -36,6 +35,10 @@ Built on top of [@adkit.so/meta-pixel](https://www.npmjs.com/package/@adkit.so/m
 
 ```bash
 npx nuxi@latest module add @adkit.so/meta-pixel-nuxt
+```
+OR
+```bash
+npm install @adkit.so/meta-pixel-nuxt
 ```
 
 ```typescript
@@ -250,7 +253,7 @@ You can configure pixel IDs via environment variables instead of hardcoding them
 
 ```bash
 # .env
-NUXT_PUBLIC_META_PIXEL_ID=123456789012345
+META_PIXEL_ID=123456789012345
 ```
 
 Then reference it in your config:
@@ -258,7 +261,7 @@ Then reference it in your config:
 ```typescript
 export default defineNuxtConfig({
     metaPixel: {
-        pixelIds: process.env.NUXT_PUBLIC_META_PIXEL_ID || '',
+        pixelIds: process.env.META_PIXEL_ID || '',
     },
 });
 ```
@@ -267,14 +270,14 @@ export default defineNuxtConfig({
 
 ```bash
 # .env
-NUXT_PUBLIC_META_PIXEL_DEFAULT=123456789012345
-NUXT_PUBLIC_META_PIXEL_BACKUP=987654321098765
+META_PIXEL_DEFAULT=123456789012345
+META_PIXEL_BACKUP=987654321098765
 ```
 
 ```typescript
 export default defineNuxtConfig({
     metaPixel: {
-        pixelIds: [process.env.NUXT_PUBLIC_META_PIXEL_DEFAULT, process.env.NUXT_PUBLIC_META_PIXEL_BACKUP].filter(Boolean) as string[],
+        pixelIds: [process.env.META_PIXEL_DEFAULT, process.env.META_PIXEL_BACKUP],
     },
 });
 ```
@@ -318,6 +321,8 @@ All Meta Pixel standard events are supported with full TypeScript autocomplete. 
 | `SubmitApplication`    | Application submitted         | Job boards, loan applications |
 | `Subscribe`            | Subscription started          | Newsletters, subscriptions    |
 | `ViewContent`          | Content viewed                | Product pages, blog posts     |
+
+You can find the official list of standard events [here](https://developers.facebook.com/docs/meta-pixel/reference/#standard-events).
 
 ### Example Usage
 
