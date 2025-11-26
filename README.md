@@ -36,7 +36,9 @@ Built on top of [@adkit.so/meta-pixel](https://www.npmjs.com/package/@adkit.so/m
 ```bash
 npx nuxi@latest module add @adkit.so/meta-pixel-nuxt
 ```
+
 OR
+
 ```bash
 npm install @adkit.so/meta-pixel-nuxt
 ```
@@ -100,18 +102,19 @@ export default defineNuxtConfig({
 
 ### Configuration Options
 
-| Option              | Type                 | Default | Description                                                                  |
-| ------------------- | -------------------- | ------- | ---------------------------------------------------------------------------- |
-| `pixelIds`          | `string \| string[]` | `''`    | **Required.** Single pixel ID or array of pixel IDs                          |
-| `autoTrackPageView` | `boolean`            | `true`  | Automatically track PageView on initialization                               |
-| `debug`             | `boolean`            | `false` | Enable styled console logs with background colors                            |
-| `enableLocalhost`   | `boolean`            | `false` | Enable tracking on localhost (useful for testing)                            |
-| `excludedRoutes`    | `string[]`           | `[]`    | Array of glob patterns to exclude from tracking (e.g., `/dashboard/**`)      |
-| `includedRoutes`    | `string[]`           | `[]`    | Array of glob patterns to whitelist (only these routes will be tracked)      |
+| Option              | Type                 | Default | Description                                                             |
+| ------------------- | -------------------- | ------- | ----------------------------------------------------------------------- |
+| `pixelIds`          | `string \| string[]` | `''`    | **Required.** Single pixel ID or array of pixel IDs                     |
+| `autoTrackPageView` | `boolean`            | `true`  | Automatically track PageView on initialization                          |
+| `debug`             | `boolean`            | `false` | Enable styled console logs with background colors                       |
+| `enableLocalhost`   | `boolean`            | `false` | Enable tracking on localhost (useful for testing)                       |
+| `excludedRoutes`    | `string[]`           | `[]`    | Array of glob patterns to exclude from tracking (e.g., `/dashboard/**`) |
+| `includedRoutes`    | `string[]`           | `[]`    | Array of glob patterns to whitelist (only these routes will be tracked) |
 
 ### Multiple Pixels Example
 
 ```typescript
+// nuxt.config.ts
 export default defineNuxtConfig({
     metaPixel: {
         pixelIds: ['PIXEL_ID_1', 'PIXEL_ID_2', 'PIXEL_ID_3'],
@@ -127,6 +130,7 @@ The `useMetaPixel()` composable is auto-imported and ready to use anywhere in yo
 ### Basic Usage
 
 ```vue
+<!-- index.vue -->
 <template>
     <button @click="meta.track('AddToCart', { value: 29.99, currency: 'USD' })">Add to Cart</button>
 </template>
@@ -151,6 +155,7 @@ The `useMetaPixel()` composable is auto-imported and ready to use anywhere in yo
 ### With Event Deduplication
 
 ```vue
+<!-- index.vue -->
 <template>
     <button @click="handleCheckout">Checkout</button>
 </template>
@@ -177,6 +182,7 @@ The `useMetaPixel()` composable is auto-imported and ready to use anywhere in yo
 ### Check if Pixel is Loaded
 
 ```vue
+<!-- index.vue -->
 <template>
     <button @click="trackIfReady">Track Purchase</button>
 </template>
@@ -201,42 +207,46 @@ You can control where the pixel is loaded using three methods:
 In `nuxt.config.ts`, provide an array of glob patterns to exclude specific routes:
 
 ```typescript
+// nuxt.config.ts
 export default defineNuxtConfig({
     metaPixel: {
         pixelIds: '...',
-        
+
         excludedRoutes: [
-            '/dashboard/*',      // Excludes /dashboard/inbox, /dashboard/settings (one level)
-            '/dashboard/**',     // Excludes /dashboard and ALL nested routes (any depth)
-            '/admin/**',         // Excludes /admin and all nested routes
-            '/api/*',            // Excludes /api/users, /api/posts (one level only)
+            '/dashboard/*', // Excludes /dashboard/inbox, /dashboard/settings (one level)
+            '/dashboard/**', // Excludes /dashboard and ALL nested routes (any depth)
+            '/admin/**', // Excludes /admin and all nested routes
+            '/api/*', // Excludes /api/users, /api/posts (one level only)
         ],
     },
 });
 ```
 
 **Pattern Syntax:**
-- `*` - Matches any characters except `/` (single path segment)
-- `**` - Matches any characters including `/` (multiple path segments, any depth)
+
+-   `*` - Matches any characters except `/` (single path segment)
+-   `**` - Matches any characters including `/` (multiple path segments, any depth)
 
 **Examples:**
-- `/dashboard/*` → Excludes `/dashboard/inbox` but NOT `/dashboard/inbox/messages`
-- `/dashboard/**` → Excludes `/dashboard`, `/dashboard/inbox`, `/dashboard/inbox/messages`, etc. (any depth)
-- `/api/*` → Excludes `/api/users` but NOT `/api/users/123`
+
+-   `/dashboard/*` → Excludes `/dashboard/inbox` but NOT `/dashboard/inbox/messages`
+-   `/dashboard/**` → Excludes `/dashboard`, `/dashboard/inbox`, `/dashboard/inbox/messages`, etc. (any depth)
+-   `/api/*` → Excludes `/api/users` but NOT `/api/users/123`
 
 ### 2. Include Routes (Global)
 
 If you only want to track specific sections, use `includedRoutes`. This takes precedence over excluded routes (except for page-level overrides).
 
 ```typescript
+// nuxt.config.ts
 export default defineNuxtConfig({
     metaPixel: {
         pixelIds: '...',
-        
+
         includedRoutes: [
-            '/shop/**',          // Track all shop pages (any depth)
-            '/checkout/**',      // Track all checkout pages (any depth)
-            '/product/*',        // Track product pages (one level only)
+            '/shop/**', // Track all shop pages (any depth)
+            '/checkout/**', // Track all checkout pages (any depth)
+            '/product/*', // Track product pages (one level only)
         ],
     },
 });
@@ -277,6 +287,7 @@ META_PIXEL_ID=123456789012345
 Then reference it in your config:
 
 ```typescript
+// nuxt.config.ts
 export default defineNuxtConfig({
     metaPixel: {
         pixelIds: process.env.META_PIXEL_ID || '',
@@ -579,30 +590,33 @@ All methods, events, and parameters have complete TypeScript definitions with In
 If your routes aren't being excluded properly:
 
 1. **Use glob patterns** - For most cases, glob patterns are easier:
-   ```typescript
-   excludedRoutes: ['/dashboard/**']  // ✅ Correct - excludes all dashboard routes
-   ```
+
+    ```typescript
+    excludedRoutes: ['/dashboard/**']; // ✅ Correct - excludes all dashboard routes
+    ```
 
 2. **Common mistakes to avoid**:
-   ```typescript
-   // ❌ Wrong - missing leading slash
-   excludedRoutes: ['dashboard/**']
-   
-   // ✅ Correct - with leading slash
-   excludedRoutes: ['/dashboard/**']
-   ```
+
+    ```typescript
+    // ❌ Wrong - missing leading slash
+    excludedRoutes: ['dashboard/**'];
+
+    // ✅ Correct - with leading slash
+    excludedRoutes: ['/dashboard/**'];
+    ```
 
 3. **Enable debug mode** to see which routes are being excluded:
-   ```typescript
-   metaPixel: {
-       debug: true,  // Will log "Route excluded: /dashboard/inbox"
-       excludedRoutes: ['/dashboard/**'],
-   }
-   ```
+
+    ```typescript
+    metaPixel: {
+        debug: true,  // Will log "Route excluded: /dashboard/inbox"
+        excludedRoutes: ['/dashboard/**'],
+    }
+    ```
 
 4. **Pattern examples**:
-   - `/dashboard/*` - Excludes `/dashboard/inbox` but NOT `/dashboard/inbox/messages`
-   - `/dashboard/**` - Excludes `/dashboard`, `/dashboard/inbox`, `/dashboard/inbox/messages`, etc. (any depth)
+    - `/dashboard/*` - Excludes `/dashboard/inbox` but NOT `/dashboard/inbox/messages`
+    - `/dashboard/**` - Excludes `/dashboard`, `/dashboard/inbox`, `/dashboard/inbox/messages`, etc. (any depth)
 
 ### Events not showing in Meta Events Manager?
 
