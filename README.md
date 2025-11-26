@@ -648,6 +648,12 @@ metaPixel: {
 }
 ```
 
+## 📖 Full Guide
+
+For a complete step-by-step guide on installing and configuring Meta Pixel, check out our detailed tutorial:
+
+**[How to Install Meta Pixel](https://adkit.so/resources/how-to-install-meta-pixel)**
+
 ## 📚 Official Documentation
 
 Learn more about Meta Pixel from official Facebook resources:
@@ -670,4 +676,4 @@ MIT
 
 **Made with ❤️ by [Adkit](https://adkit.so)**
 
-If this package helped you, please consider giving it a ⭐️ on [GitHub](https://github.com/adkit-so/meta-pixel-nuxt)!
+If this package helped you, please consider giving it a ⭐️ on [GitHub](https://github.com/AdKit-so/meta-pixel-nuxt)!
